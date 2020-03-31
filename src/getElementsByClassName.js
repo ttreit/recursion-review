@@ -12,27 +12,39 @@ var getElementsByClassName = function(className) {
   // create doc variable to simplify
   var doc = document.body;
 
-  if (doc.classList.contains(className)) {
-    result.push(doc);
-    console.log('first result', result);
-  }
-
-  // start with document body node
-  if (doc.hasChildNodes()) {
-    var children = doc.childNodes;
-    for (var i = 0; i < children.length; i++) {
-      var classes = children[i].classList;
-      if (classes !== undefined) {
-        if (classes.contains(className)) {
-          result.push(children[i]);
-        }
+  var helper = function(node, className) {
+    if (node.classList !== undefined) {
+      if (node.classList.contains(className)) {
+        result.push(node);
+        console.log('first result', result);
       }
-      // if (classes.contains(className)) {
-      //   result.push(children[i])
-      // }
-      console.log('classes', classes);
     }
-  }
+    if (node.hasChildNodes()) {
+      var children = node.childNodes;
+      for (var i = 0; i < children.length; i++) {
+        helper(children[i], className);
+      }
+    }
+  };
+
+  helper(doc, className);
+
+  // // start with document body node
+  // if (doc.hasChildNodes()) {
+  //   var children = doc.childNodes;
+  //   for (var i = 0; i < children.length; i++) {
+  //     var classes = children[i].classList;
+  //     if (classes !== undefined) {
+  //       if (classes.contains(className)) {
+  //         result.push(children[i]);
+  //       }
+  //     }
+  //     // if (classes.contains(className)) {
+  //     //   result.push(children[i])
+  //     // }
+  //     console.log('classes', classes);
+  //   }
+  // }
     // if node has children
       // for each child, do they have children?
         // if so, call getElementsByClassName again (base case)
