@@ -45,11 +45,10 @@ var getElementsByClassName = function(className) {
   //     console.log('classes', classes);
   //   }
   // }
-    // if node has children
-      // for each child, do they have children?
-        // if so, call getElementsByClassName again (base case)
-        // if no child, get classList for the node
-          // push ele to result array
+  // if node has children // for each child, do they have children?
+  // if so, call getElementsByClassName again (base case)
+  // if no child, get classList for the node
+  // push ele to result array
   console.log('result', result);
   return result;
 };
