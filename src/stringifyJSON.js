@@ -1,30 +1,49 @@
 var stringifyJSON = function(obj) {
-  //create a result set to empty string
-  var result = '';
-  //check obj for number, null, boolean, string
   if (typeof obj === 'number' || typeof obj === 'boolean') {
-   result += obj;
+   return obj.toString();
   }
   if (obj === null) {
-    result += obj;
+    return 'null';
   }
   if (typeof obj === 'string') {
-    result += '"' + obj + '"';
+    return '"' + obj + '"';
   }
-  //array
-  if (Array.isArray(obj) && !obj.length) {
-    result += '[]';
-  }
-  if (Array.isArray(obj) && obj.length > 0) {
-    result += '[';
+  if (Array.isArray(obj)) {
     for (var i = 0; i < obj.length; i++) {
-      stringifyJSON(obj[i]);
-      result += ',';
+      obj[i] = stringifyJSON(obj[i]);
     }
-    result.substring(0, result.length -1);
-    result += ']';
+    return '[' + obj + ']';
   }
-    //use Array.isArray
+  if (typeof obj === 'object') {
+  var result = ''; 
+  for (var key in obj) {
+     if (typeof obj[key] !== 'function' && obj[key] !== undefined) {
+       result += stringifyJSON(key) + ':' + stringifyJSON(obj[key]) + ',';
+     }
+   }
+   result = result = result.substring(0, result.length -1);
+   return '{' + result + '}';
+ }
+};
+
+//if(obj.hasOwnProperty(key)) return false; return '{}'
+
+
+
+// if (Array.isArray(obj) && obj.length > 0) {
+//   var arrayResult = ''
+//   for (var i = 0; i < obj.length; i++) {
+//     arrayResult = stringifyJSON(obj[i]);
+//     arrayResult += ',';
+//   }
+//   result.substring(0, result.length -1);
+//   result += ']';
+// }
+
+    // result.substring(0, result.length -1);
+    // result += ']';
+
+        //use Array.isArray
     //create opening and closing brackets
     //for loop over array
       //call stringifyJson on Array[i] for each
@@ -35,5 +54,14 @@ var stringifyJSON = function(obj) {
       //get keys and values
       //call stringifyJson on values and keys
     //return result
-    return result;
-};
+
+      //array
+  // if (Array.isArray(obj) && !obj.length) {
+  //    return '[]';
+  // }
+  // if (Array.isArray(obj) && obj.length > 0) {
+  //   for (var i = 0; i < obj.length; i++) {
+  //     obj[i] = stringifyJSON(obj[i]);
+  //   }
+  //   return '[' + obj + ']';
+  // }
