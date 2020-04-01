@@ -1,6 +1,6 @@
 var getElementsByClassName = function(className) {
   var result = [];
-  var helper = function(node, className) {
+  var getElement = function(node) {
     if (node.classList) {
       if (node.classList.contains(className)) {
         result.push(node);
@@ -9,10 +9,10 @@ var getElementsByClassName = function(className) {
     if (node.hasChildNodes()) {
       var children = node.childNodes;
       for (var i = 0; i < children.length; i++) {
-        helper(children[i], className);
+        getElement(children[i], className);
       }
     }
   };
-  helper(document.body, className);
+  getElement(document.body);
   return result;
 };
